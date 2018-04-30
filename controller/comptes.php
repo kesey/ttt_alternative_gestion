@@ -13,11 +13,8 @@ class Comptes extends Controller{
     private function ventes($who, $id){
         $model = $this->models[0];
 
-        /*$d['ventes'][$who] = $this->$model->findAll(array("fields" => "SUM(prix_vente_euros) AS somme",
-                                                      "conditions" => "id_vendeur = ".$id));*/
-
-        $d['ventes'][$who] = $this->$model->findAll(array("fields" => "SUM(3) AS somme",
-                                                      "conditions" => "id_vendeur = ".$id." AND id_cassette >= 25"));
+        $d['ventes'][$who] = $this->$model->findAll(array("fields" => "SUM(prix_vente_euros) AS somme",
+                                                      "conditions" => "id_vendeur = ".$id));
 
         $d['ventes'][$who] = $d['ventes'][$who][0];
         return $d['ventes'][$who];
@@ -26,18 +23,15 @@ class Comptes extends Controller{
     private function compta($who, $id){
         $model = $this->models[0];
 
-        /*$d['compta'][$who]['recupere'] = $this->$model->findAll(array("fields" => "SUM(montant_frais_de_port) AS somme",
-                                                                  "conditions" => "id_vendeur = ".$id." AND frais_de_port_rembourses = 0"));*/
-
         $d['compta'][$who]['recupere'] = $this->$model->findAll(array("fields" => "SUM(montant_frais_de_port) AS somme",
-                                                                  "conditions" => "id_vendeur = ".$id." AND frais_de_port_rembourses = 0 AND id_cassette >= 25"));
+                                                                  "conditions" => "id_vendeur = ".$id." AND frais_de_port_rembourses = 0"));
 
         $d['compta'][$who]['recupere'] = $d['compta'][$who]['recupere'][0];
 
         /*$d['compta'][$who]['doit'] = $this->$model->findAll(array("fields" => "SUM(prix_vente_euros) AS somme",
                                                               "conditions" => "id_vendeur = ".$id." AND vente_remboursee = 0 AND (montant_frais_de_port = 0 OR montant_frais_de_port IS NULL)"));*/
 
-        $d['compta'][$who]['doit'] = $this->$model->findAll(array("fields" => "SUM(prix_vente_euros) AS somme",
+        $d['compta'][$who]['doit'] = $this->$model->findAll(array("fields" => "SUM(3) AS somme",
                                                               "conditions" => "id_vendeur = ".$id." AND vente_remboursee = 0 AND (montant_frais_de_port = 0 OR montant_frais_de_port IS NULL) AND id_cassette >= 25"));
 
         $d['compta'][$who]['doit'] = $d['compta'][$who]['doit'][0];
